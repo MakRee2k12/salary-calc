@@ -54,7 +54,13 @@
     <label>Збирання в ТЗ (2,69 грн × кількість):</label>
     <input type="number" id="tz" value="0" />
 
-    <label>Вага за розміщення у ДС (0,14 грн × кг):</label>
+    <label>Переміщення товарів з ТЗ (3,32 грн × кількість):</label>
+    <input type="number" id="move" value="0" />
+
+    <label>Розміщення товарів у ДС (1,53 грн × кількість):</label>
+    <input type="number" id="place" value="0" />
+
+    <label>Вага розміщення (0,14 грн × кг):</label>
     <input type="number" id="weight" value="0" />
 
     <label>Пакування замовлення (0,27 грн × артикулів):</label>
@@ -67,16 +73,27 @@
     const inputs = document.querySelectorAll('input');
     const total = document.getElementById('total');
 
-    const rates = { ds: 1.34, tz: 2.69, weight: 0.14, pack: 0.27 };
+    const rates = { 
+      ds: 1.34, 
+      tz: 2.69, 
+      move: 3.32,
+      place: 1.53,
+      weight: 0.14, 
+      pack: 0.27 
+    };
 
-    inputs.forEach(inp => inp.addEventListener('input', () => {
+    function recalc() {
       const sum =
         (rates.ds * Number(document.getElementById('ds').value)) +
         (rates.tz * Number(document.getElementById('tz').value)) +
+        (rates.move * Number(document.getElementById('move').value)) +
+        (rates.place * Number(document.getElementById('place').value)) +
         (rates.weight * Number(document.getElementById('weight').value)) +
         (rates.pack * Number(document.getElementById('pack').value));
       total.textContent = `Всього: ${sum.toFixed(2)} грн`;
-    }));
+    }
+
+    inputs.forEach(inp => inp.addEventListener('input', recalc));
   </script>
 </body>
 </html>
