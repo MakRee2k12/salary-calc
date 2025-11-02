@@ -156,7 +156,20 @@
       total.textContent = `Всього: ${sum.toFixed(2)} грн`;
     }
 
-    inputs.forEach(inp => inp.addEventListener('input', recalc));
+    inputs.forEach(inp => {
+      inp.addEventListener('input', recalc);
+
+      // очищаем "0" при фокусе
+      inp.addEventListener('focus', () => {
+        if (inp.value === "0") inp.value = "";
+      });
+
+      // возвращаем "0", если пользователь ничего не ввел
+      inp.addEventListener('blur', () => {
+        if (inp.value === "") inp.value = "0";
+        recalc();
+      });
+    });
 
     resetBtn.addEventListener('click', () => {
       inputs.forEach(inp => inp.value = 0);
