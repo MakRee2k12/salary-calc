@@ -5,102 +5,109 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Розрахунок ЗП</title>
   <style>
-    :root {
-      --bg: #f2f4f7;
-      --card-bg: #ffffff;
-      --accent: #0078ff;
-      --text: #1e1e1e;
-      --border: #e0e0e0;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
     body {
-      font-family: "Inter", Arial, sans-serif;
-      background: var(--bg);
       margin: 0;
-      padding: 1rem;
-      color: var(--text);
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #74ABE2, #5563DE);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(10px);
     }
 
     .container {
+      width: 90%;
       max-width: 420px;
-      margin: 2rem auto;
-      background: var(--card-bg);
-      padding: 2rem 1.5rem;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-      transition: transform 0.2s ease;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      animation: fadeIn 0.8s ease forwards;
     }
 
-    .container:hover {
-      transform: translateY(-3px);
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
-      font-size: 1.4rem;
       text-align: center;
+      font-weight: 600;
       margin-bottom: 1.5rem;
-      color: var(--accent);
+      font-size: 1.6rem;
+      letter-spacing: 0.5px;
     }
 
     label {
       display: block;
-      margin: 0.5rem 0 0.2rem;
+      margin: 0.5rem 0 0.3rem;
       font-weight: 500;
+      font-size: 0.95rem;
     }
 
     input {
       width: 100%;
-      padding: 0.6rem;
+      padding: 0.7rem;
       margin-bottom: 1rem;
-      border: 1px solid var(--border);
+      border: none;
       border-radius: 10px;
       font-size: 1rem;
       outline: none;
-      background: #fafafa;
-      transition: border 0.2s, background 0.2s;
+      background: rgba(255, 255, 255, 0.25);
+      color: #fff;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 0 0 rgba(255, 255, 255, 0);
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
     }
 
     input:focus {
-      border-color: var(--accent);
-      background: #fff;
-      box-shadow: 0 0 0 3px rgba(0, 120, 255, 0.1);
+      background: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
 
     .result {
       text-align: center;
       margin-top: 1.5rem;
-      font-weight: bold;
+      font-weight: 600;
       font-size: 1.3rem;
-      color: var(--accent);
+      color: #fff;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
     }
 
     .reset-btn {
       display: block;
       width: 100%;
       margin-top: 1.5rem;
-      padding: 0.7rem;
-      background: var(--accent);
-      color: white;
+      padding: 0.8rem;
+      background: rgba(255, 255, 255, 0.25);
+      color: #fff;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       font-size: 1rem;
       font-weight: 500;
       cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
+      transition: all 0.3s ease;
     }
 
     .reset-btn:hover {
-      background: #0062cc;
+      background: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
     }
 
     .reset-btn:active {
       transform: scale(0.98);
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 1.5rem 1rem;
-      }
     }
   </style>
 </head>
@@ -153,18 +160,19 @@
         (rates.place * Number(document.getElementById('place').value)) +
         (rates.weight * Number(document.getElementById('weight').value)) +
         (rates.pack * Number(document.getElementById('pack').value));
+      
       total.textContent = `Всього: ${sum.toFixed(2)} грн`;
     }
 
     inputs.forEach(inp => {
       inp.addEventListener('input', recalc);
 
-      // очищаем "0" при фокусе
+      // очищаємо "0" при фокусі
       inp.addEventListener('focus', () => {
         if (inp.value === "0") inp.value = "";
       });
 
-      // возвращаем "0", если пользователь ничего не ввел
+      // повертаємо "0", якщо порожньо
       inp.addEventListener('blur', () => {
         if (inp.value === "") inp.value = "0";
         recalc();
