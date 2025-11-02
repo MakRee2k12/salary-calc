@@ -13,6 +13,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 1rem;
     }
 
     .container {
@@ -22,7 +23,7 @@
       border-radius: 20px;
       box-shadow: 0 8px 32px rgba(31, 38, 135, 0.3);
       padding: 2rem;
-      width: 90%;
+      width: 100%;
       max-width: 420px;
       color: #fff;
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
@@ -31,6 +32,7 @@
     h1 {
       text-align: center;
       font-weight: 600;
+      font-size: 1.1rem; /* меньше, чтобы не переносился */
       margin-bottom: 1.5rem;
     }
 
@@ -38,6 +40,7 @@
       display: block;
       margin: 0.5rem 0 0.2rem;
       font-weight: 500;
+      font-size: 0.95rem;
     }
 
     input {
@@ -89,50 +92,39 @@
     .reset-btn:hover {
       background: rgba(255, 255, 255, 0.4);
     }
-
-    .share-btn {
-      background: #0088cc;
-      color: white;
-    }
-
-    .share-btn:hover {
-      background: #009fe3;
-    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>💼 Розрахунок зарплати</h1>
 
-    <label>Збирання в ДС (1,34 грн × кількість):</label>
+    <label>📦 Збирання в ДС (1,34 грн):</label>
     <input type="number" id="ds" placeholder="0" />
 
-    <label>Збирання в ТЗ (2,69 грн × кількість):</label>
+    <label>🏷️ Збирання в ТЗ (2,69 грн):</label>
     <input type="number" id="tz" placeholder="0" />
 
-    <label>Переміщення товарів з ТЗ (3,32 грн × кількість):</label>
+    <label>🔄 Переміщення товарів з ТЗ (3,32 грн):</label>
     <input type="number" id="move" placeholder="0" />
 
-    <label>Розміщення товарів у ДС (1,53 грн × кількість):</label>
+    <label>🧺 Розміщення товарів у ДС (1,53 грн):</label>
     <input type="number" id="place" placeholder="0" />
 
-    <label>Вага розміщення (0,14 грн × кг):</label>
+    <label>⚖️ Вага розміщення (0,14 грн):</label>
     <input type="number" id="weight" placeholder="0" />
 
-    <label>Пакування замовлення (0,27 грн × артикулів):</label>
+    <label>🎁 Пакування замовлення (0,27 грн):</label>
     <input type="number" id="pack" placeholder="0" />
 
     <div class="result" id="total">Всього: 0 грн</div>
 
     <button class="reset-btn" id="reset">Очистити все</button>
-    <button class="share-btn" id="share">Поділитися в Telegram</button>
   </div>
 
   <script>
     const inputs = document.querySelectorAll('input');
     const total = document.getElementById('total');
     const resetBtn = document.getElementById('reset');
-    const shareBtn = document.getElementById('share');
 
     const rates = {
       ds: 1.34,
@@ -153,7 +145,6 @@
         (rates.pack * +document.getElementById('pack').value);
 
       total.textContent = `Всього: ${sum.toFixed(2)} грн`;
-      return sum.toFixed(2);
     }
 
     inputs.forEach(inp => {
@@ -164,13 +155,6 @@
     resetBtn.addEventListener('click', () => {
       inputs.forEach(inp => (inp.value = ""));
       total.textContent = 'Всього: 0 грн';
-    });
-
-    shareBtn.addEventListener('click', () => {
-      const sum = recalc();
-      const text = encodeURIComponent(`💰 Я сьогодні заробив ${sum} грн!\nСпробуй і ти 👉 https://тут-твоя-ссылка.com`);
-      const tgUrl = `https://t.me/share/url?url=${text}`;
-      window.open(tgUrl, '_blank');
     });
   </script>
 </body>
